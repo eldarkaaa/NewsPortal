@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<LABWEB.Models.Entities.News>
+<h1>News searching page</h1>
+@using (Html.BeginForm("Index","Search", FormMethod.Get))
+{
+    @Html.TextBox("text")<input type="submit" value="Search"/>
+}
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>HeadLine</th>
+                <th>Text</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var news in Model)
+            {
+                <tr>
+                    <td>@news.HeadLine</td>
+                    <td>@news.Text</td>
+                    <td>@news.Author</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

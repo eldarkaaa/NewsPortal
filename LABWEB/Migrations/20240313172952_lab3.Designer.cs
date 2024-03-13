@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LABWEB.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240209193345_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20240313172952_lab3")]
+    partial class lab3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,32 @@ namespace LABWEB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("LABWEB.Models.Entities.Comments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NewsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("Comments");
+                });
 
             modelBuilder.Entity("LABWEB.Models.Entities.News", b =>
                 {
@@ -51,6 +77,20 @@ namespace LABWEB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("News");
+                });
+
+            modelBuilder.Entity("LABWEB.Models.Entities.Comments", b =>
+                {
+                    b.HasOne("LABWEB.Models.Entities.News", "News")
+                        .WithMany("Comments")
+                        .HasForeignKey("NewsId");
+
+                    b.Navigation("News");
+                });
+
+            modelBuilder.Entity("LABWEB.Models.Entities.News", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

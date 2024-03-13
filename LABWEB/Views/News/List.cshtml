@@ -6,7 +6,7 @@
 @model List<LABWEB.Models.Entities.News>
 
 <h1>News</h1>
-<table class="table"> 
+<table class="table">
     <thead>
         <tr>
             <th>Id</th>
@@ -17,18 +17,24 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var news in Model)
+        @foreach (var news in Model)
         {
-          <tr>
-              <td>@news.Id</td>
-              <td>@news.HeadLine</td>
-              <td>@news.Text</td>
-              <td>@news.Date</td>
-              <td>@news.Author</td>
-              <td>
-                  <a class="btn btn-primary" asp-controller="News" asp-action="Edit" asp-route-id="@news.Id">Edit</a>
-              </td>
-          </tr>  
+            <tr>
+                <td>@news.Id</td>
+                <td>@news.HeadLine</td>
+                <td>@news.Text</td>
+                <td>@news.Date</td>
+                <td>@news.Author</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="News" asp-action="Edit" asp-route-id="@news.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Comments" asp-action="List" asp-route-id="@news.Id">Comments</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Comments" asp-action="Add" asp-route-id="@news.Id">Add Comments</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

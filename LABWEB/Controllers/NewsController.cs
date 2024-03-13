@@ -30,7 +30,7 @@ namespace LABWEB.Controllers
             };
             await dbContext.News.AddAsync(news);
             await dbContext.SaveChangesAsync();
-            return View();
+            return RedirectToAction("List", "News");
         }
         [HttpGet]
         public async Task<IActionResult> List()
@@ -48,7 +48,7 @@ namespace LABWEB.Controllers
         public async Task<IActionResult> Edit(News viewModel)
         {
             var news = await dbContext.News.FindAsync(viewModel.Id);
-            if(news is not null)
+            if (news is not null)
             {
                 news.HeadLine = viewModel.HeadLine;
                 news.Text = viewModel.Text;
@@ -61,8 +61,8 @@ namespace LABWEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(News viewModel)
         {
-            var news = await dbContext.News.AsNoTracking().FirstOrDefaultAsync(x =>x.Id==viewModel.Id);
-            if(news is not null)
+            var news = await dbContext.News.AsNoTracking().FirstOrDefaultAsync(x => x.Id == viewModel.Id);
+            if (news is not null)
             {
                 dbContext.News.Remove(viewModel);
                 await dbContext.SaveChangesAsync();

@@ -26,7 +26,8 @@ namespace LABWEB.Controllers
                 HeadLine = viewModel.HeadLine,
                 Text = viewModel.Text,
                 Date = viewModel.Date,
-                Author = viewModel.Author
+                Author = viewModel.Author,
+                CategoriesId = viewModel.CategoriesId
             };
             await dbContext.News.AddAsync(news);
             await dbContext.SaveChangesAsync();
@@ -54,6 +55,7 @@ namespace LABWEB.Controllers
                 news.Text = viewModel.Text;
                 news.Date = viewModel.Date;
                 news.Author = viewModel.Author;
+                news.CategoriesId = viewModel.CategoriesId;
                 await dbContext.SaveChangesAsync();
             }
             return RedirectToAction("List", "News");

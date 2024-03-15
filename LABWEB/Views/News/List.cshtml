@@ -13,6 +13,7 @@
             <th>Text</th>
             <th>Date</th>
             <th>Author</th>
+            <th>Category</th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
                 <td>@news.Text</td>
                 <td>@news.Date</td>
                 <td>@news.Author</td>
+                <td>@news.CategoriesId</td>
                 <td>
                     <a class="btn btn-primary" asp-controller="News" asp-action="Edit" asp-route-id="@news.Id">Edit</a>
                 </td>
@@ -33,6 +35,7 @@
                 <td>
                     <a class="btn btn-primary" asp-controller="Comments" asp-action="Add" asp-route-id="@news.Id">Add Comments</a>
                 </td>
+
             </tr>
         }
     </tbody>

@@ -12,5 +12,6 @@ namespace LABWEB.Data
         }
         public DbSet<News> News { get; set; }
         public DbSet<Comments> Comments { get; set; }
+        public DbSet<Categories> Categories { get; set; }
     }
 }

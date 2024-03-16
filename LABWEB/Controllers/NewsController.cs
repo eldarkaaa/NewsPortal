@@ -2,6 +2,7 @@
 using LABWEB.Models;
 using LABWEB.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace LABWEB.Controllers
@@ -14,8 +15,10 @@ namespace LABWEB.Controllers
             this.dbContext = dbContext;
         }
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            var categories = await this.dbContext.Categories.ToListAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Category");
             return View();
         }
         [HttpPost]
@@ -36,7 +39,9 @@ namespace LABWEB.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var news = await dbContext.News.ToListAsync();
+            var news = await dbContext.News
+                .Include(n => n.Categories)
+                .ToListAsync();
             return View(news);
         }
         [HttpGet]

@@ -37,12 +37,19 @@ namespace LABWEB.Controllers
             return RedirectToAction("List", "News");
         }
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(int pg=1)
         {
-            var news = await dbContext.News
-                .Include(n => n.Categories)
-                .ToListAsync();
-            return View(news);
+            var news = await dbContext.News.Include(n => n.Categories).ToListAsync();
+            const int pageSize = 2;
+            if (pg < 1)
+                pg = 1;
+            int recsCount = news.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = news.Skip(recSkip).Take(pager.PageSize).ToList();
+            this.ViewBag.Pager = pager;
+            //return View(news);
+            return View(data);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
